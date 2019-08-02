@@ -53,3 +53,18 @@ void AnalogPB::send(unsigned int input)
                                  input, input >> 7); // send a Pitch Bend MIDI event
   }
 }
+
+// AnalogPBlo
+// --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- //
+
+void AnalogPBlo::send(unsigned int input)
+{
+  if (input != oldVal)
+  {
+    oldVal = input;
+    input <<= 4; // Convert from 10 bit to 14-bit Pitch Bend data
+    MIDI_Controller.MIDI()->send(PITCH_BEND,
+                                 channel + channelOffset * channelsPerBank,
+                                 input, input >> 7); // send a Pitch Bend MIDI event
+  }
+}
